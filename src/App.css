@@ -1,0 +1,13 @@
+div.app{
+  margin: 30vh 30vw;
+}
+
+div.buttons > span{
+  display: inline-block;
+  width: 48%;
+  margin: 0 1%;
+}
+
+div.buttons > span > button{
+  width: 100%;
+}
