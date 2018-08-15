@@ -1,0 +1,5 @@
+div.buttons > button{
+  display: inline-block;
+  width: 48%;
+  margin: 0 1%;
+}
