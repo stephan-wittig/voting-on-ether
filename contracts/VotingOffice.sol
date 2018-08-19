@@ -1,17 +1,8 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "openzeppelin-solidity/contracts/introspection/SupportsInterfaceWithLookup.sol";
 import "openzeppelin-solidity/contracts/access/Whitelist.sol";
-
-/**
- * @title ERC165-compatible ERC20 token contract
- *
- * @dev Used as interface by VotingOffice
- */
-contract VotingRights is ERC165, ERC20{
-
-}
+import "./interfaces/VoterRegistry.sol";
 
 /**
  * @title Voting Office
@@ -19,11 +10,12 @@ contract VotingRights is ERC165, ERC20{
  * @dev Contract to manage multiple votings belonging to one token
  */
 contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
-  VotingRights internal _votingRights;
+  VoterRegistry internal _voterRegistry;
+  ERC165 internal _ERC165;
 
-  bytes4 public constant interfaceId_ERC20 = 0x36372b07;
   bytes4 public constant interfaceId_ERC165 = 0x01ffc9a7;
   bytes4 public constant interfaceId_invalid = 0xffffffff;
+  bytes4 public constant interfaceId_VoterRegistry = 0xeb48da06;
 
   mapping(uint256 => Voting) internal votings;
   uint256 nextId;
@@ -38,24 +30,25 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
   }
 
 
-  constructor(address __votingRights)
+  constructor(address __voterRegistry)
     public
   {
-    _votingRights = VotingRights(__votingRights);
+    _voterRegistry = VoterRegistry(__voterRegistry);
+    _ERC165 = ERC165(__voterRegistry);
 
     // Checks target contract for ERC165 interface introspection (positive and negative)
-    require(_votingRights.supportsInterface(interfaceId_ERC165), "Target contract does not implement ERC165");
-    require(!_votingRights.supportsInterface(interfaceId_invalid), "Target contract does not implement ERC165");
+    require(_ERC165.supportsInterface(interfaceId_ERC165), "Target contract does not implement ERC165");
+    require(!_ERC165.supportsInterface(interfaceId_invalid), "Target contract does not implement ERC165");
 
-    // Checks target contract for ERC20 compatibility
-    require(_votingRights.supportsInterface(interfaceId_ERC20), "Target contract does not implement ERC20");
+    // Checks target contract fro VoterRegistry interfaece
+    require(_ERC165.supportsInterface(interfaceId_VoterRegistry), "Target contract does not implement VoterRegistry");
   }
 
-  function getVotersRegistry() external returns (address) {
-    return _votingRights;
+  function getVotersRegistry() external view returns (address) {
+    return _voterRegistry;
   }
 
-  function newDemocraticVoting(
+  function newVoting(
     string _title,
     uint8 _options,
     uint256 _end
