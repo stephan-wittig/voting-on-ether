@@ -8,7 +8,7 @@ pragma solidity ^0.4.24;
 
 interface VoterRegistry {
   event registrationChange (
-    address indexed _voter,
+    address _voter,
     bool indexed _newStatus
   );
 

@@ -22,13 +22,15 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
 
   struct Voting {
     string title;
-    uint8 options;
     uint256 totalVotes;
     uint256[] votes;
     uint256 end;
     mapping(address => bool) voters;
   }
 
+  event createdVote(
+    uint256 _votingId
+  );
 
   constructor(address __voterRegistry)
     public
@@ -40,8 +42,10 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
     require(_ERC165.supportsInterface(interfaceId_ERC165), "Target contract does not implement ERC165");
     require(!_ERC165.supportsInterface(interfaceId_invalid), "Target contract does not implement ERC165");
 
-    // Checks target contract fro VoterRegistry interfaece
+    // Checks target contract for VoterRegistry interface
     require(_ERC165.supportsInterface(interfaceId_VoterRegistry), "Target contract does not implement VoterRegistry");
+
+    addAddressToWhitelist(owner);
   }
 
   function getVotersRegistry() external view returns (address) {
@@ -62,9 +66,9 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
 
     uint256[] memory votesArray= new uint256[](_options);
 
-    votings[nextId] = Voting(_title, _options, 0, votesArray, _end);
+    votings[nextId] = Voting(_title, 0, votesArray, _end);
 
-    return nextId++;
+    emit createdVote(nextId++);
   }
 
   function votingTitle(uint256 _id) external view returns(string) {
