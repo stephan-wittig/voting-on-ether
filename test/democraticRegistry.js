@@ -3,7 +3,7 @@ var DemocraticRegistry = artifacts.require("./DemocraticRegistry");
 contract("DemocraticRegistry", function(accounts) {
   it("should have registered interface IDs for ERC165 and VoterRegistry", () => {
     var interfaceId_ERC165 = "0x01ffc9a7";
-    var interfaceId_VoterRegistry = "0xeb48da06";
+    var interfaceId_VoterRegistry = "0x312b5b94";
     var interfaceId_invalid = "0xffffffff";
 
     return DemocraticRegistry.deployed().then((instance) => {

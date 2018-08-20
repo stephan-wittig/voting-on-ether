@@ -4,6 +4,6 @@ var VotingOffice = artifacts.require("./VotingOffice");
 module.exports = function(deployer) {
 
   deployer.deploy(DemocraticRegistry, "Voting Test").then(() => {
-    return deployer.deploy(VotingOffice, DemocraticRegistry.address);
+    return deployer.deploy(VotingOffice, DemocraticRegistry.address, "abc.de/view?id=");
   });
 };
