@@ -15,7 +15,7 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
 
   bytes4 public constant interfaceId_ERC165 = 0x01ffc9a7;
   bytes4 public constant interfaceId_invalid = 0xffffffff;
-  bytes4 public constant interfaceId_VoterRegistry = 0xeb48da06;
+  bytes4 public constant interfaceId_VoterRegistry = 0x312b5b94;
 
   mapping(uint256 => Voting) internal votings;
   uint256 nextId;

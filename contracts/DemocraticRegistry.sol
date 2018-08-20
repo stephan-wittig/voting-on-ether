@@ -10,10 +10,6 @@ import "./interfaces/VoterRegistry.sol";
  * @dev Registers and de-registers voters
  */
 contract DemocraticRegistry is VoterRegistry, SupportsInterfaceWithLookup, Whitelist {
-
-  bytes4 public constant interfaceId_VoterRegistry = 0xeb48da06;
-  bytes4 public constant interfaceId_ERC165 = 0x01ffc9a7;
-
   string internal name;
   uint256 internal numberOfVoters;
 
@@ -23,6 +19,8 @@ contract DemocraticRegistry is VoterRegistry, SupportsInterfaceWithLookup, White
     public
   {
     name = _name;
+    bytes4 interfaceId_VoterRegistry = 0x312b5b94;
+    bytes4 interfaceId_ERC165 = 0x01ffc9a7;
 
     //Registering ERC165 interface IDs
     _registerInterface(interfaceId_ERC165);

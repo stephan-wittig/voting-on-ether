@@ -2,8 +2,7 @@ pragma solidity ^0.4.24;
 
 /**
  * @title Standard Voter Registry
- *
- * @dev Registers and de-registers voters
+ * @dev ERC165 identifier for this interface is 0x312b5b94
  */
 
 interface VoterRegistry {
@@ -16,9 +15,6 @@ interface VoterRegistry {
   function getName() external view returns (string);
 
   function isRegistered(address _voter) external view returns (bool);
-
-  function registerVoter(address _voter) external;
-  function deregisterVoter(address _voter) external;
 
   function registerVoters(address[] _voters) external;
   function deregisterVoters(address[] _voters) external;
