@@ -25,11 +25,18 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
     uint256 totalVotes;
     uint256[] votes;
     uint256 end;
+    // SHA256 digest of the question and all answers (comma seperated list).
+    bytes32 digest;
     mapping(address => bool) voters;
   }
 
   event createdVote(
     uint256 _votingId
+  );
+
+  event voteReceived(
+    uint256 _votingId,
+    address _voter
   );
 
   constructor(address __voterRegistry)
@@ -55,7 +62,8 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
   function newVoting(
     string _title,
     uint8 _options,
-    uint256 _end
+    uint256 _end,
+    bytes32 _digest
   )
     external
     onlyIfWhitelisted(msg.sender)
@@ -66,7 +74,7 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
 
     uint256[] memory votesArray= new uint256[](_options);
 
-    votings[nextId] = Voting(_title, 0, votesArray, _end);
+    votings[nextId] = Voting(_title, 0, votesArray, _end, _digest);
 
     emit createdVote(nextId++);
   }
@@ -83,7 +91,44 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
     return votings[_id].end;
   }
 
+  function votingDigest(uint256 _id) external view returns(bytes32) {
+    require(isValidId(_id), "Voting does not exist.");
+
+    return votings[_id].digest;
+  }
+
   function isValidId(uint256 _id) internal view returns(bool) {
     return (_id < nextId);
+  }
+
+  function isActive(uint256 _id) internal view returns(bool) {
+    return !(votings[_id].totalVotes < _voterRegistry.getNumberOfVoters() || block.number >= votings[_id].end);
+  }
+
+  function vote(uint256 _id, uint8 _option) external {
+    require(_voterRegistry.isRegistered(msg.sender), "You are not registered to vote in this office");
+    require(!votings[_id].voters[msg.sender], "You already voted on this issue. Votes are final");
+    require(_option < votings[_id].votes.length, "This option does not exist");
+    require(isActive(_id), "This voting is finished");
+
+    votings[_id].totalVotes++;
+    votings[_id].votes[_option]++;
+
+    votings[_id].voters[msg.sender] = true;
+
+    emit voteReceived(_id, msg.sender);
+  }
+
+  function totalVotes(uint256 _id) external view returns (uint256) {
+    return votings[_id].totalVotes;
+  }
+
+  function interimResults(uint256 _id) external view returns (uint256[]) {
+    return votings[_id].votes;
+  }
+
+  function finalResults(uint256 _id) external view returns (uint256[]) {
+    require(!isActive(_id), "This voting is still ongoing");
+    return votings[_id].votes;
   }
 }

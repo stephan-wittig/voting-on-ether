@@ -14,7 +14,8 @@ contract DemocraticRegistry is VoterRegistry, SupportsInterfaceWithLookup, White
   bytes4 public constant interfaceId_VoterRegistry = 0xeb48da06;
   bytes4 public constant interfaceId_ERC165 = 0x01ffc9a7;
 
-  string public name;
+  string internal name;
+  uint256 internal numberOfVoters;
 
   mapping (address => bool) voters;
 
@@ -31,18 +32,32 @@ contract DemocraticRegistry is VoterRegistry, SupportsInterfaceWithLookup, White
     addAddressToWhitelist(owner);
   }
 
+  function getNumberOfVoters() external view returns (uint256) {
+    return numberOfVoters;
+  }
+
+  function getName() external view returns (string) {
+    return name;
+  }
+
   function isRegistered(address _voter) public view returns (bool) {
     return voters[_voter];
   }
 
   function registerVoter(address _voter) public onlyIfWhitelisted(msg.sender) {
+    if(voters[_voter] == false) {
       voters[_voter] = true;
+      numberOfVoters++;
       emit registrationChange(_voter, true);
+    }
   }
 
   function deregisterVoter(address _voter) public onlyIfWhitelisted(msg.sender) {
+    if(voters[_voter] == true) {
       voters[_voter] = false;
+      numberOfVoters--;
       emit registrationChange(_voter, false);
+    }
   }
 
   function registerVoters(address[] _voters) external onlyIfWhitelisted(msg.sender) {

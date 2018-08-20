@@ -22,10 +22,16 @@ contract("VotingOffice", function(accounts) {
 
   it("should create a new voting correctly", () => {
     var office;
+    const gibberish = "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
     return VotingOffice.deployed().then((instance) => {
       office = instance;
-      office.newVoting("Test Vote", 2, 9999, {from: accounts[0]});
+      office.newVoting(
+        "Test Vote",
+        2,
+        9999,
+        gibberish,
+        {from: accounts[0]});
       //create listener
       let event = office.createdVote({});
       return eventPromise(event);
@@ -33,11 +39,17 @@ contract("VotingOffice", function(accounts) {
       let id = result.args._votingId;
       return Promise.all([
         office.votingTitle.call(id),
-        office.votingEnd.call(id)
+        office.votingEnd.call(id),
+        office.votingDigest.call(id),
+        office.interimResults.call(id),
+        office.totalVotes.call(id)
       ]);
     }).then((responses) => {
         assert.equal(responses[0], "Test Vote", "Returned the wrong title");
         assert.equal(responses[1].toNumber(), 9999, "Returned the wrong end block number");
+        assert.equal(responses[2], gibberish, "Returned the wrong voting digest");
+        assert.equal(responses[3].length, 2, "Returned the wrong voting digest");
+        assert.equal(responses[4], 0, "Returned the wrong voting digest");
     });
   });
 });

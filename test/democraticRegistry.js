@@ -21,7 +21,7 @@ contract("DemocraticRegistry", function(accounts) {
 
   it("should return correct name when asked for it", () => {
     return DemocraticRegistry.deployed().then((instance) => {
-      return instance.name.call();
+      return instance.getName.call();
     }).then((response) => {
       assert.equal(response, "Voting Test", "Did not return correct name");
     });

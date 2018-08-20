@@ -12,6 +12,9 @@ interface VoterRegistry {
     bool indexed _newStatus
   );
 
+  function getNumberOfVoters() external view returns (uint256);
+  function getName() external view returns (string);
+
   function isRegistered(address _voter) external view returns (bool);
 
   function registerVoter(address _voter) external;
