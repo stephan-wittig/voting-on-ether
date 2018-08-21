@@ -1,3 +1,19 @@
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [How to Set Up Developer Environment](#how-to-set-up-developer-environment)
+	- [Step 0: Create new VM and install Lubuntu](#step-0-create-new-vm-and-install-lubuntu)
+	- [Step 1: Insert guest additions](#step-1-insert-guest-additions)
+	- [Step 2: Install guest additions](#step-2-install-guest-additions)
+	- [Step 3: Install nodejs](#step-3-install-nodejs)
+	- [Step 3: Get truffle:](#step-3-get-truffle)
+	- [Step 4: Install Ganache (formerly known as Test RPC)](#step-4-install-ganache-formerly-known-as-test-rpc)
+	- [Step 5: Install git](#step-5-install-git)
+	- [Step 6: Install Atom](#step-6-install-atom)
+	- [Step 7: Install a shitload of my favourite Atom packages](#step-7-install-a-shitload-of-my-favourite-atom-packages)
+	- [Step 8: Install Browser with devtools](#step-8-install-browser-with-devtools)
+
+<!-- /TOC -->
+
 # How to Set Up Developer Environment
 ## Step 0: Create new VM and install Lubuntu
 *   Get ISO here: [https://lubuntu.net/downloads/](https://lubuntu.net/downloads/)
