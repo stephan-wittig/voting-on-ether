@@ -82,4 +82,28 @@ contract("VotingOffice", function(accounts) {
       assert.equal(responses[1].toNumber(), 1, "Total vote count was not incremented correctly");
     })
   });
+
+  it("should not unregistered addresses to vote", () => {
+    return VotingOffice.deployed().then(async (instance) => {
+      try {
+        await instance.vote(id, 1, {from: accounts[2]});
+      } catch (error) {
+        //nothing to see here
+        return;
+      }
+      assert(false, "Did not throw when unregistered account tried to vote");
+    });
+  });
+
+  it("should not allow a voter to vote twice on the same voting", () => {
+    return VotingOffice.deployed().then(async (instance) => {
+      try {
+        await instance.vote(id, 1, {from: accounts[1]});
+      } catch (error) {
+        //nothing to see here
+        return;
+      }
+      assert(false, "Did not throw when voter tried to vote twice");
+    });
+  });
 });
