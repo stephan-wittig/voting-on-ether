@@ -149,7 +149,7 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
   /// @param _option Number of the option that should be voted for (starts at 0)
   function vote(uint256 _id, uint8 _option) external {
     require(isActive(_id), "This voting is already closed");
-    require(!votings[_id].voters[msg.sender], "You already voted on this issue. Votes are final");
+    require(hasVoted(_id, msg.sender), "You already voted on this issue. Votes are final");
     require(votings[_id].votes.length > _option, "This option does not exist");
 
     votings[_id].totalVotes++;
@@ -158,6 +158,16 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
     votings[_id].voters[msg.sender] = true;
 
     emit voteReceived(_id, msg.sender);
+  }
+
+  /// @notice Checks whether an address has already voted on a voting
+  /// @param _id Voting that should be checked
+  /// @param _voter Address that should be checked
+  /// @return True if the voter has already voted
+  function hasVoted(uint256 _id, address _voter) public view returns (bool) {
+    require(_voterRegistry.isRegistered(_voter), "This address is not registered to vote here.");
+
+    return votings[_id].voters[_voter];
   }
 
   /// @notice Counts the number of total votes in a voting

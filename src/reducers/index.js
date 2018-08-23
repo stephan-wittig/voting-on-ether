@@ -4,8 +4,20 @@ import {
 } from "../actions";
 
 const initialState = {
-  locked: false,
-  storedText: ""
+  accountAd: null,
+  web3: null,
+  contracts: null,
+  thisVoting: {
+    id: 0,
+    title: "",
+    question: "",
+    answers: [],
+    votes: [],
+    totalVotes: 0,
+    valid: false,
+    active: false,
+    hasVoted: false
+  }
 }
 
 const app =(state = initialState, action) => {

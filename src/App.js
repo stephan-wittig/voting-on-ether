@@ -1,26 +1,25 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
 //CSS
 import style from "./App.css";
 
 //Components
-import StorageContract from "./components/storageContract/StorageContract";
+import Header from "./components/header/Header";
+
+//Contracts
+import VotingOffice from "../build/contracts/VotingOffice.json";
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      
-    };
+
+  render() {
+    return (
+      <div className={style.app}>
+        <Header />
+        Test Eins Zwei Drei Vier
+      </div>
+    );
   }
 
-  render(){
-    return(
-      <div className={style.app}>
-        <StorageContract />
-      </div>
-    )
-  }
 }
 
 export default App;
