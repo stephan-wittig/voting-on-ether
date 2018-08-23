@@ -149,7 +149,7 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
   /// @param _option Number of the option that should be voted for (starts at 0)
   function vote(uint256 _id, uint8 _option) external {
     require(isActive(_id), "This voting is already closed");
-    require(hasVoted(_id, msg.sender), "You already voted on this issue. Votes are final");
+    require(!hasVoted(_id, msg.sender), "You already voted on this issue. Votes are final");
     require(votings[_id].votes.length > _option, "This option does not exist");
 
     votings[_id].totalVotes++;
