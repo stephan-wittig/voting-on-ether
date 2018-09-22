@@ -1,39 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import { devToolsEnhancer } from "redux-devtools-extension";
 import { DrizzleProvider } from "drizzle-react";
+import { LoadingContainer } from "drizzle-react-components";
+
+// Configs
+import store from "./store";
+import drizzleOptions from "./drizzleOptions";
 
 // CSS
 import style from "./index.css";
 
 // Components
 import App from "./App";
-
-// Reducers
-import rootReducer from "./reducers"
-
-// Contracts
-import DemocraticRegistry from "../build/contracts/DemocraticRegistry.json";
-import VotingOffice from "../build/contracts/VotingOffice.json";
-
-// Drizzle Options
-const options = {
-  contracts: [
-    DemocraticRegistry,
-    VotingOffice
-  ]
-};
-
-
-const store = createStore(rootReducer, devToolsEnhancer());
+import DrizzleLoading from "./components/drizzleLoading/DrizzleLoading";
+import DrizzleError from "./components/drizzleError/DrizzleError";
 
 ReactDOM.render(
-  <DrizzleProvider options={options}>
-    <Provider store={store}>
-      <App />
-    </Provider>
+  <DrizzleProvider options={drizzleOptions} store={store}>
+    <LoadingContainer errorComp={<DrizzleLoading/>} loadingComp={<DrizzleError/>}>
+      <App/>
+    </LoadingContainer>
   </DrizzleProvider>,
   document.getElementById("root")
 );

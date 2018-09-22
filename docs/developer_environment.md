@@ -62,9 +62,9 @@ sudo apt-get install atom
 ```
 ## Step 7: Install a shitload of my favourite Atom packages
 ```bash
-apm install pigments file-icons language-babel  linter linter-eslint autocomplete autocomplete-modules autocomplete-solidity autocomplete-paths scroll-through-time minimap minimap-git-diff open-terminal-here markdown-preview react-snippets language-solidity language-markdown markdown-pdf markdown-scroll-sync tool-bar markdown-writer markdown-toc linter-markdown tool-bar-markdown-writer project-manager
+apm install pigments file-icons language-babel  linter linter-eslint autocomplete autocomplete-modules autocomplete-solidity autocomplete-paths scroll-through-time minimap minimap-git-diff open-terminal-here markdown-preview react-snippets language-solidity language-markdown markdown-pdf markdown-scroll-sync tool-bar markdown-writer markdown-toc tool-bar-markdown-writer project-manager
 apm disable language-javascript
 ```
 ## Step 8: Install Browser with devtools
 *   Install either Firefox or Chrome
-*   Install redux and react developer tools addons
+*   Install metamask, redux- and react-devtools addons

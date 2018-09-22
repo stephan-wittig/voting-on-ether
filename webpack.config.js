@@ -10,9 +10,10 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: ["babel-polyfill", "./src/index.js"],
   output: {
     path: path.resolve("build_webpack"),
+    globalObject: 'typeof self !== \'undefined\' ? self : this',
     filename: "bundle.js"
   },
   module: {
