@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { DrizzleProvider } from "drizzle-react";
-import { LoadingContainer } from "drizzle-react-components";
+import { Provider } from "react-redux";
+import { DrizzleContext } from "drizzle-react";
 import { BrowserRouter } from "react-router-dom";
 
 // Configs
-import store from "./store";
-import drizzleOptions from "./drizzleOptions";
+import reduxStore from "./reduxStore";
+import drizzle from "./drizzle";
 
 // CSS
 import style from "./index.css";
@@ -15,14 +15,17 @@ import style from "./index.css";
 import App from "./App";
 import DrizzleLoading from "./components/drizzleLoading/DrizzleLoading";
 import DrizzleError from "./components/drizzleError/DrizzleError";
+import LoadingContainer from "./components/loadingContainer/LoadingContainer";
 
 ReactDOM.render(
-    <DrizzleProvider options={drizzleOptions} store={store}>
-      <LoadingContainer errorComp={<DrizzleLoading/>} loadingComp={<DrizzleError/>}>
+    <DrizzleContext.Provider drizzle={drizzle}>
+      <Provider store={reduxStore}>
         <BrowserRouter>
-          <App/>
+          <LoadingContainer>
+            <App/>
+          </LoadingContainer>
         </BrowserRouter>
-      </LoadingContainer>
-    </DrizzleProvider>,
+      </Provider>
+    </DrizzleContext.Provider>,
   document.getElementById("root")
 );

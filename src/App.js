@@ -6,7 +6,7 @@ import style from "./App.css";
 
 //Components
 import Header from "./components/header/Header";
-import ListVotingsContent from "./components/listVotings/ListVotings";
+import ListVotings from "./components/listVotings/ListVotings";
 import SearchVoting from "./components/searchVoting/SearchVoting";
 
 //Contracts
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div className={style.app}>
         <Header/>
-        <Route exact path="/" component={ListVotingsContent}/>
+        <Route exact path="/" component={ListVotings}/>
         <Route path="/search" component={SearchVoting}/>
       </div>
     );
