@@ -13,32 +13,7 @@ class ListVotingsContent extends Component {
     super(props);
 
     this.contracts = context.drizzle.contracts;
-
-    this.createVoteArray = this.createVoteArray.bind(this);
-    this.createIdArray = this.createIdArray.bind(this);
   }
-
-  componentDidMount() {
-    this.createVoteArray();
-    this.createIdArray(false);
-  }
-
-  createIdArray(filter){
-    return 0;
-  }
-
-  createVoteArray(){
-    var i;
-    var nextId = 20;
-    console.log(this.props.VotingOffice.nextId.call());
-    // nextId abrufen
-    for (i = 0; i < nextId; i++){
-      // status und anzahl der stimmen abrufen
-      // setVoting(id, active, votes);
-    }
-  }
-
-
 
   render() {
     return (
@@ -81,4 +56,5 @@ const ListVotings = drizzleConnect(
   mapStatesToProps,
   mapDispatchToProps
 );
+
 export default ListVotings

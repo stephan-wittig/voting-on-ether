@@ -1,0 +1,11 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
+const SearchVoting = ({}) => (
+  <div>
+    Das ist eine andere Komponente <br/>
+    <Link to={"/"}>Back to the list of all Votings</Link>
+  </div>
+);
+
+export default SearchVoting;
