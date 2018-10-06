@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { DrizzleContext } from "drizzle-react";
 
 // Components
 import VOHeader from "../vOHeader/VOHeader"
@@ -10,9 +11,11 @@ class ListVotings extends Component {
 
   render() {
     return (
-      <div>
-        <VOHeader/>
-      </div>
+      <DrizzleContext.Consumer>
+        {drizzleContext => {
+          return <VOHeader drizzle={drizzleContext.drizzle} drizzleState={drizzleContext.drizzleState}/>
+        }}
+      </DrizzleContext.Consumer>
     );
   }
 }

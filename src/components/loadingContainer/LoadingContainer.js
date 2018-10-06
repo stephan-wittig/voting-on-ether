@@ -1,16 +1,16 @@
 import React from "react";
 import { DrizzleContext } from "drizzle-react";
 
-const LoadingContainer = (props) => {
+const LoadingContainer = ({LoadingComp, children}) => {
   return (
     <DrizzleContext.Consumer>
       {drizzleContext => {
 
         if (!drizzleContext.initialized) {
-          return "Loading...";
+          return (<LoadingComp/>);
         }
 
-        return props.children
+        return children
       }}
     </DrizzleContext.Consumer>
   );

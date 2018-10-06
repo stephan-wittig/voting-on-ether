@@ -9,7 +9,7 @@ import reduxStore from "./reduxStore";
 import drizzle from "./drizzle";
 
 // CSS
-import style from "./index.css";
+import "./index.css";
 
 // Components
 import App from "./App";
@@ -21,7 +21,8 @@ ReactDOM.render(
     <DrizzleContext.Provider drizzle={drizzle}>
       <Provider store={reduxStore}>
         <BrowserRouter>
-          <LoadingContainer>
+          <LoadingContainer LoadingComp={DrizzleLoading}>
+            abc
             <App/>
           </LoadingContainer>
         </BrowserRouter>
