@@ -1,16 +1,14 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
+
 const path = require("path");
-
-const htmlWebpackPlugin = new HtmlWebPackPlugin({
-  template: "./public/index.html",
-  filename: "./index.html"
-});
-
-
+const webpack = require('webpack');
 
 module.exports = {
-  entry: ["babel-polyfill", "./src/index.js"],
+  entry: [
+    "./src/index",
+    "babel-polyfill"
+  ],
   output: {
     path: path.resolve("build_webpack"),
     globalObject: 'typeof self !== \'undefined\' ? self : this',
@@ -72,6 +70,12 @@ module.exports = {
     ]
   },
   plugins: [
-    htmlWebpackPlugin
+    new HtmlWebPackPlugin({
+      template: "./public/index.html",
+      filename: "./index.html"
+    }),
+    new webpack.HotModuleReplacementPlugin({
+      multiStep: true
+    }),
   ]
 };

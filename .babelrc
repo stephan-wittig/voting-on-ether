@@ -1,4 +1,7 @@
 {
   "presets": ["env", "react", "es2015", "stage-0"],
-  "plugins": ["transform-object-rest-spread", "transform-async-generator-functions"]
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-async-generator-functions"
+  ]
 }

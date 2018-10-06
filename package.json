@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack-dev-server --hot --host localhost --port 3000 --content-base src --mode development",
     "build": "webpack --mode production"
   },
   "repository": "git@github.com:stephan-wittig/voting-on-ether.git",
