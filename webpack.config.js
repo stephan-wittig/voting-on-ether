@@ -2,16 +2,12 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 
 const path = require("path");
-const webpack = require('webpack');
+const webpack = require("webpack");
 
 module.exports = {
-  entry: [
-    "./src/index",
-    "babel-polyfill"
-  ],
   output: {
     path: path.resolve("build_webpack"),
-    globalObject: 'typeof self !== \'undefined\' ? self : this',
+    globalObject: "typeof self !== \"undefined\" ? self : this",
     filename: "bundle.js"
   },
   module: {
@@ -43,25 +39,25 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          { loader: 'style-loader' },
+          { loader: "style-loader" },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: { importLoaders: 2 },
           },
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               plugins: () => [
-                require('autoprefixer')({
-                  browsers: ['last 1 version', 'ie >= 11'],
+                require("autoprefixer")({
+                  browsers: ["last 1 version", "ie >= 11"],
                 }),
               ],
             },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: {
-              includePaths: [path.resolve(__dirname, '..', 'node_modules')],
+              includePaths: [path.resolve(__dirname, "..", "node_modules")],
             },
           },
         ],
@@ -74,7 +70,7 @@ module.exports = {
       filename: "./index.html"
     }),
     new webpack.HotModuleReplacementPlugin({
-      multiStep: true
+      multiStep: false
     }),
   ]
 };

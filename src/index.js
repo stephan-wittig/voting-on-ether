@@ -14,7 +14,6 @@ import "./index.css";
 // Components
 import App from "./App";
 import DrizzleLoading from "./components/drizzleLoading/DrizzleLoading";
-import DrizzleError from "./components/drizzleError/DrizzleError";
 import LoadingContainer from "./components/loadingContainer/LoadingContainer";
 
 ReactDOM.render(
@@ -22,7 +21,6 @@ ReactDOM.render(
       <Provider store={reduxStore}>
         <BrowserRouter>
           <LoadingContainer LoadingComp={DrizzleLoading}>
-            abc
             <App/>
           </LoadingContainer>
         </BrowserRouter>
