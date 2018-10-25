@@ -90,7 +90,7 @@ contract VotingOffice is SupportsInterfaceWithLookup, Whitelist{
     returns (uint256)
   {
     require(_options > 1, "Votes need at least two possible answers");
-    require(_end > block.number, "End block number is lower dann current block number");
+    require(_end > block.number, "End block number is lower than current block number");
 
     //Stores an array with length = number of possible answers to record votes
     uint256[] memory votesArray= new uint256[](_options);
