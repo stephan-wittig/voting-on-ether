@@ -3,6 +3,7 @@ import React, { Component } from "react";
 
 // components
 import ContractData from "../contractData/ContractData";
+import TransactionButton from "../txButton/TxButton";
 
 class VOHeader extends Component {
 constructor(props) {
@@ -10,6 +11,9 @@ constructor(props) {
 }
 
   render() {
+    const digest = this.props.drizzle.web3.utils.soliditySha3("abc");
+    const sender = this.props.drizzleState.accounts[0];
+
     return (
       <div>
         <h2>
@@ -17,8 +21,21 @@ constructor(props) {
         </h2>
         <div>
           <b>
-            Total Number of votings: <ContractData contract={"VotingOffice"} method={"nextId"} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
+            Total Number of votings:
+            <ContractData
+              contract={"VotingOffice"}
+              method={"nextId"}
+              drizzle={this.props.drizzle}
+              drizzleState={this.props.drizzleState}
+            />
           </b>
+          <TransactionButton
+            contract={"VotingOffice"}
+            method={"newVoting"}
+            drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
+            arguments={["Beispiel", 2, 9999, digest, {from: sender}]}
+          >Create Voting</TransactionButton>
           <hr/>
           <Link to={"/search"}>Search for a specific voting</Link>
         </div>
