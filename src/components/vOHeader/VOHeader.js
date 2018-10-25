@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 // components
 import ContractData from "../contractData/ContractData";
-import TransactionButton from "../txButton/TxButton";
+import TxButton from "../txButton/TxButton";
 
 class VOHeader extends Component {
 constructor(props) {
@@ -29,13 +29,13 @@ constructor(props) {
               drizzleState={this.props.drizzleState}
             />
           </b>
-          <TransactionButton
+          <TxButton
             contract={"VotingOffice"}
             method={"newVoting"}
             drizzle={this.props.drizzle}
             drizzleState={this.props.drizzleState}
             arguments={["Beispiel", 2, 9999, digest, {from: sender}]}
-          >Create Voting</TransactionButton>
+          >Create Voting</TxButton>
           <hr/>
           <Link to={"/search"}>Search for a specific voting</Link>
         </div>
