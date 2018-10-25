@@ -36,7 +36,7 @@ class TxButton extends Component {
     this.setState({
       stackID: stackID,
       disabled: true
-    })
+    });
   }
 
   render() {
@@ -67,7 +67,7 @@ TxButton.defaultProps = {
   arguments: [],
 
   label: "Transaction",
-  then: (stackID)=>{alert("The transaction has been send. StackID is " & stackID)},
+  then: (stackID)=>{alert("The transaction has been send. StackID is: " + stackID)},
   disabled: false
 };
 
