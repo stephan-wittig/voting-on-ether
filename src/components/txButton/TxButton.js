@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { Drizzle } from "drizzle";
 
 class TxButton extends Component {
-  // Props: contract, method, drizzle, drizzleState, arguments (als Array), label, then disabled
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +17,7 @@ class TxButton extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     // Wird ausgeführ sobald die Transaktion ~richtig~ gesendet wurde
     if (nextState.stackID !== undefined && nextProps.drizzleState.transactionStack[nextState.stackID] && nextState.disabled){
+        //Reaktiviert Button und führt then-Funktion aus
         this.props.then(this.state.stackID);
         this.setState({
           disabled: false
@@ -29,10 +29,11 @@ class TxButton extends Component {
   handleClick() {
     const drizzle = this.props.drizzle;
     const contract = drizzle.contracts[this.props.contract];
-    var stackID;
 
-    stackID = contract.methods[this.props.method].cacheSend(...this.props.arguments);
+    // Sendet Transaktion und beobachtet sie
+    const stackID = contract.methods[this.props.method].cacheSend(...this.props.arguments);
 
+    // Speichert StackID und deaktiviert Button
     this.setState({
       stackID: stackID,
       disabled: true
