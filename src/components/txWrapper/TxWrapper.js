@@ -3,12 +3,15 @@ import { DrizzleContext } from "drizzle-react";
 import PropTypes from "prop-types";
 
 /*
-/ TxWrapper gibt zwei Variablen an seine Render-Props weiter: Die erste ist eine
+/ TxWrapper gibt zwei Variablen an seine Render-Props
+/ (https://reactjs.org/docs/render-props.html) weiter: Die erste ist eine
 / Funktion zum senden der spezifizierten Transaktion. Die zweite ist eine Funktion,
 / die ausgeführt wird, sobald die Transation gesendet wurde.
 / für Props siehe unten.
 */
 
+// Diese Komponente wird nicht exportiert, sondern nur im darunter folgenden
+// ContextConsumer verwendet
 class InnerComponent extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +66,7 @@ class InnerComponent extends Component {
   }
 
   render() {
-    return <span>{this.sendTransaction), this.props.render(this.state.pending)}</span>
+    return <React.Fragment>{ this.props.render(this.sendTransaction, this.state.pending)}</React.Fragment>
   }
 }
 

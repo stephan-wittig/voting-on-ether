@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { DrizzleContext } from "drizzle-react";
 import PropTypes from "prop-types";
+import { isEqual } from "underscore";
 
 /*
-/ ContractData gibt den Rückgabewert eines Calls an seine Render-Props weiter.
+/ ContractData gibt den Rückgabewert eines Calls an seine Render-Props
+/ (https://reactjs.org/docs/render-props.html) weiter.
 / Für Props siehe unten.
 */
 
+// Diese Komponente wird nicht exportiert, sondern nur im darunter folgenden
+// ContextConsumer verwendet
 class InnerComponent extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +30,7 @@ class InnerComponent extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     //  DataKey wird erneuert, wenn sich die Parameter ändern
     if(
-      this.props.args !== nextProps.args ||
+      !isEqual(this.props.args, nextProps.args) ||
       this.props.method !== nextProps.method ||
       this.props.contract !== nextProps.contract
     ){
@@ -39,12 +43,19 @@ class InnerComponent extends Component {
   }
 
   render() {
-    //Daten aus dem DrizzleState abholen.
-    const contract = this.props.drizzleState.contracts[this.props.contract];
-    const data = contract[this.props.method][this.state.dataKey];
+    if (this.state.dataKey) {
+      //Daten aus dem DrizzleState abholen.
+      const contract = this.props.drizzleState.contracts[this.props.contract];
+      const data = contract[this.props.method][this.state.dataKey];
 
-    //Daten anzeigen
-    return <span>{data && this.props.render(data)}</span>;
+      //Daten anzeigen
+      return <React.Fragment>{data && this.props.render(data.value)}</React.Fragment>;
+
+    } else {
+      //Nichts anzeigen
+      return <React.Fragment></React.Fragment>;
+    }
+
   }
 }
 

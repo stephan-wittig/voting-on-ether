@@ -24,10 +24,11 @@ constructor(props) {
             Total Number of votings:
             <ContractData
               contract={"VotingOffice"}
-              method={"nextId"}
+              method={"votingTitle"}
+              args={[1]}
             >
               {(data) => {
-                return <span>{data.value}</span>
+                return <span> {data}</span>
               }}
             </ContractData>
           </b>
@@ -37,7 +38,7 @@ constructor(props) {
             method={"newVoting"}
             args={["Beispiel", 2, 9999, digest, {from: sender}]}
           >
-            {(pending, action) => {
+            {(action, pending) => {
               return(
                 <button onClick={action} disabled={pending}>Create Voting</button>
               )
