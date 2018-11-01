@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 // components
 import ContractData from "../contractData/ContractData";
-import TxButton from "../txButton/TxButton";
+import TxWrapper from "../txWrapper/TxWrapper";
 
 class VOHeader extends Component {
 constructor(props) {
@@ -25,17 +25,24 @@ constructor(props) {
             <ContractData
               contract={"VotingOffice"}
               method={"nextId"}
-              drizzle={this.props.drizzle}
-              drizzleState={this.props.drizzleState}
-            />
+            >
+              {(data) => {
+                return <span>{data.value}</span>
+              }}
+            </ContractData>
           </b>
-          <TxButton
+          <br/>
+          <TxWrapper
             contract={"VotingOffice"}
             method={"newVoting"}
-            drizzle={this.props.drizzle}
-            drizzleState={this.props.drizzleState}
-            arguments={["Beispiel", 2, 9999, digest, {from: sender}]}
-          >Create Voting</TxButton>
+            args={["Beispiel", 2, 9999, digest, {from: sender}]}
+          >
+            {(pending, action) => {
+              return(
+                <button onClick={action} disabled={pending}>Create Voting</button>
+              )
+            }}
+          </TxWrapper>
           <hr/>
           <Link to={"/search"}>Search for a specific voting</Link>
         </div>

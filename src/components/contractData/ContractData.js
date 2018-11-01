@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { DrizzleContext } from "drizzle-react";
 import PropTypes from "prop-types";
-import { Drizzle } from "drizzle";
 
-class ContractData extends Component {
+/*
+/ ContractData gibt den Rückgabewert eines Calls an seine Render-Props weiter.
+/ Für Props siehe unten.
+*/
+
+class InnerComponent extends Component {
   constructor(props) {
     super(props);
     this.fetchDataKey = this.fetchDataKey.bind(this);
@@ -15,14 +19,14 @@ class ContractData extends Component {
   fetchDataKey(props){
     const contract = props.drizzle.contracts[props.contract];
     const method = contract.methods[props.method];
-    const dataKey = method.cacheCall(...props.arguments);
+    const dataKey = method.cacheCall(...props.args);
     return dataKey;
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     //  DataKey wird erneuert, wenn sich die Parameter ändern
     if(
-      this.props.arguments !== nextProps.arguments ||
+      this.props.args !== nextProps.args ||
       this.props.method !== nextProps.method ||
       this.props.contract !== nextProps.contract
     ){
@@ -40,20 +44,41 @@ class ContractData extends Component {
     const data = contract[this.props.method][this.state.dataKey];
 
     //Daten anzeigen
-    return <span>{data && data.value}</span>;
+    return <span>{data && this.props.render(data)}</span>;
   }
 }
 
+// Render props innerhalb von Render props. Yay!
+const ContractData = ({contract, method, args, children}) => (
+  <DrizzleContext.Consumer>
+    {DrizzleContext => {
+      return(
+        <InnerComponent
+          drizzle={DrizzleContext.drizzle}
+          drizzleState={DrizzleContext.drizzleState}
+          contract={contract}
+          method={method}
+          args={args}
+          render={children}
+        />
+      )
+    }}
+  </DrizzleContext.Consumer>
+);
+
+
 ContractData.propTypes = {
+  // Contract und Methode des Contracts, die aufgerufen werden soll.
   contract: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
-  drizzle: PropTypes.instanceOf(Drizzle).isRequired,
-  drizzleState: PropTypes.object.isRequired,
-  arguments: PropTypes.array
+  // Argumente, mit denen die Funktion aufgerufen wird.
+  args: PropTypes.array,
+  // Child muss eine Funktion sein = Render-Props.
+  children: PropTypes.func.isRequired
 };
 
 ContractData.defaultProps = {
-  arguments: []
+  args: []
 };
 
 export default ContractData;
