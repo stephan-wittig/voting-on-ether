@@ -5,8 +5,7 @@ import PropTypes from "prop-types";
 /*
 / TxWrapper gibt zwei Variablen an seine Render-Props
 / (https://reactjs.org/docs/render-props.html) weiter: Die erste ist eine
-/ Funktion zum senden der spezifizierten Transaktion. Die zweite ist eine Funktion,
-/ die ausgeführt wird, sobald die Transation gesendet wurde.
+/ Funktion zum senden der spezifizierten Transaktion. Die zweite ist ein bool, der true ist, während eine Transaktion gesendet wird.
 / für Props siehe unten.
 */
 
